@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:wght@400;600;700&display=swap">
+<style>body{margin:0;background:#1a1a1e;font-family:Figtree,system-ui,sans-serif;color:#f5f5f2}a{color:#d4ff3a}a:hover{color:#ff4fd8}button{font-family:inherit;border:0;cursor:pointer;color:inherit}*::-webkit-scrollbar{display:none}button:focus-visible{outline:2px solid #d4ff3a;outline-offset:2px}
+@keyframes ag-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}@keyframes ag-shake{0%{transform:translate(-2px,1px) rotate(-1deg)}50%{transform:translate(2px,-1px) rotate(1deg)}100%{transform:translate(-1px,-2px)}}@keyframes ag-ripple{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.1);opacity:0}}@keyframes ag-marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes ag-wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-2deg) scale(1.03)}75%{transform:rotate(2deg) scale(1.03)}}@keyframes ag-blink{50%{opacity:0}}@keyframes ag-eq{to{transform:scaleY(1)}}@keyframes ag-thump{0%{transform:scale(1.15);opacity:1}100%{transform:scale(.85);opacity:.4}}@keyframes ag-fall{0%,15%{transform:none;opacity:1}80%{transform:translateY(340px) rotate(var(--r));opacity:1}100%{transform:translateY(340px) rotate(var(--r));opacity:0}}@keyframes ag-flash{0%{opacity:.9}12%,100%{opacity:0}}@keyframes ag-crumble{0%,30%{transform:none;opacity:1;filter:blur(0)}34%,38%,42%{transform:translateX(-6px) rotate(-3deg)}36%,40%{transform:translateX(6px) rotate(3deg)}70%{transform:translateY(80px) rotate(12deg) scale(.7);opacity:0;filter:blur(4px)}100%{opacity:0}}@keyframes ag-appear{0%,62%{opacity:0;transform:scale(1.6)}75%,100%{opacity:1;transform:scale(1)}}@keyframes ag-drop{0%,40%{transform:none;opacity:1}75%,100%{transform:translateY(60px) rotate(40deg);opacity:0}}@keyframes ag-scan{0%{top:6%}50%{top:90%}100%{top:6%}}@keyframes ag-pop{0%{transform:scale(.4) rotate(-12deg);opacity:0}60%{transform:scale(1.15) rotate(4deg);opacity:1}100%{transform:scale(1) rotate(0)}}@keyframes ag-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@keyframes ag-sheet{from{transform:translateY(100%)}to{transform:none}}</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-wrap:wrap;gap:40px;align-items:center;justify-content:center;padding:32px 20px;box-sizing:border-box">
+
+  <div style="display:flex;flex-direction:column;gap:6px;width:180px">
+    <div style="font-family:Caprasimo;font-size:22px;color:#d4ff3a;margin-bottom:4px">Alarmageddon</div>
+    <div style="font-size:11px;letter-spacing:.12em;color:#9a9aa3;font-weight:700;margin-bottom:6px">JUMP TO SCREEN</div>
+    <sc-for list="{{ jumps }}" as="j" hint-placeholder-count="13">
+      <button onClick="{{ j.go }}" style="text-align:left;padding:7px 12px;border-radius:999px;font-size:13px;background:{{ j.bg }};color:{{ j.fg }}" style-hover="background:#2e2e35">{{ j.label }}</button>
+    </sc-for>
+  </div>
+
+  <div style="width:380px;height:800px;border-radius:56px;border:8px solid #000;box-sizing:border-box;overflow:hidden;background:#0e0e10;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 2px #2e2e35">
+
+    <div style="position:absolute;left:0;right:0;top:0;z-index:20;display:flex;justify-content:space-between;padding:14px 28px 0;font-size:12px;font-weight:700;pointer-events:none;color:#f5f5f2">
+      <span>{{ clock }}</span><span style="letter-spacing:2px">●●● ▮</span>
+    </div>
+
+    <sc-if value="{{ is.onboard }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:44px 0 0;overflow:hidden">
+        <sc-if value="{{ ob.s0 }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:1;position:relative;display:flex;flex-direction:column;animation:ag-in .4s ease-out">
+            <div style="position:absolute;width:420px;height:420px;border-radius:50%;background:color-mix(in oklab,#d4ff3a 18%,#0e0e10);left:-28px;top:20px;animation:ag-pulse 1.3s ease-in-out infinite"></div>
+            <div style="position:absolute;width:260px;height:260px;border-radius:50%;background:#d4ff3a;left:52px;top:100px;animation:ag-pulse .65s ease-in-out infinite"></div>
+            <div style="position:absolute;left:182px;top:230px;transform:translate(-50%,-50%);font-family:Caprasimo;font-size:64px;color:#0e0e10;white-space:nowrap"><div style="animation:ag-shake .18s steps(2) infinite;text-shadow:3px 0 0 #ff4fd8">Zzz.</div></div>
+            <div style="flex:1"></div>
+            <div style="position:relative;padding:0 28px;display:flex;flex-direction:column;gap:12px">
+              <div style="font-family:Caprasimo;font-size:40px;line-height:1.02">Your snooze button is dead.</div>
+              <div style="font-size:15px;line-height:1.45;color:#9a9aa3;text-wrap:pretty">I don't stop ringing until you prove you're awake. Sing, scan, solve or shake. Your choice. Sort of.</div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ ob.s1 }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;display:flex;flex-direction:column;padding:28px 24px 0;gap:14px;animation:ag-in .4s ease-out">
+            <div style="font-family:Caprasimo;font-size:36px;line-height:1.05">I'll pick your poison.</div>
+            <div style="font-size:14px;color:#9a9aa3">Every morning I roll one of these at random. You find out when it rings.</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">
+              <div style="background:#d4ff3a;color:#0e0e10;border-radius:28px;padding:18px 16px;transform:rotate(-2deg)"><div style="font-family:Caprasimo;font-size:20px">Sing on beat</div><div style="font-size:12px;margin-top:6px;line-height:1.35">Carrot, parrot, parrot. One word per beat.</div></div>
+              <div style="background:#ff4fd8;color:#0e0e10;border-radius:28px;padding:18px 16px;transform:rotate(2deg)"><div style="font-family:Caprasimo;font-size:20px">Scan a thing</div><div style="font-size:12px;margin-top:6px;line-height:1.35">I name it, you go find it.</div></div>
+              <div style="background:#1c1c21;border-radius:28px;padding:18px 16px;transform:rotate(1.5deg)"><div style="font-family:Caprasimo;font-size:20px">Math</div><div style="font-size:12px;margin-top:6px;line-height:1.35;color:#9a9aa3">Three sums. Before coffee.</div></div>
+              <div style="background:#1c1c21;border-radius:28px;padding:18px 16px;transform:rotate(-1.5deg)"><div style="font-family:Caprasimo;font-size:20px">Shake it</div><div style="font-size:12px;margin-top:6px;line-height:1.35;color:#9a9aa3">30 shakes. Arms, wake up.</div></div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ ob.s2 }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;display:flex;flex-direction:column;padding:28px 24px 0;gap:14px;animation:ag-in .4s ease-out">
+            <div style="font-family:Caprasimo;font-size:36px;line-height:1.05">Let me in.</div>
+            <div style="font-size:14px;color:#9a9aa3">I need these to know you're actually up.</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">
+              <div style="background:#1c1c21;border-radius:28px;padding:16px 18px;display:flex;align-items:center;gap:14px"><div style="width:40px;height:40px;border-radius:50%;background:#d4ff3a;flex:none"></div><div><div style="font-weight:700;font-size:15px">Microphone</div><div style="font-size:12px;color:#9a9aa3">To hear you sing. Badly is fine.</div></div></div>
+              <div style="background:#1c1c21;border-radius:28px;padding:16px 18px;display:flex;align-items:center;gap:14px"><div style="width:40px;height:40px;border-radius:50%;background:#ff4fd8;flex:none"></div><div><div style="font-weight:700;font-size:15px">Camera</div><div style="font-size:12px;color:#9a9aa3">To see the cup. Not your face.</div></div></div>
+              <div style="background:#1c1c21;border-radius:28px;padding:16px 18px;display:flex;align-items:center;gap:14px"><div style="width:40px;height:40px;border-radius:50%;background:#f5f5f2;flex:none"></div><div><div style="font-weight:700;font-size:15px">Motion</div><div style="font-size:12px;color:#9a9aa3">To count shakes.</div></div></div>
+              <div style="background:#1c1c21;border-radius:28px;padding:16px 18px;display:flex;align-items:center;gap:14px"><div style="width:40px;height:40px;border-radius:50%;background:#45454d;flex:none"></div><div><div style="font-weight:700;font-size:15px">Notifications</div><div style="font-size:12px;color:#9a9aa3">Obviously.</div></div></div>
+            </div>
+          </div>
+        </sc-if>
+        <div style="padding:24px 24px 30px;display:flex;align-items:center;gap:16px">
+          <div style="display:flex;gap:6px;flex:1">
+            <sc-for list="{{ obDots }}" as="d" hint-placeholder-count="3"><div style="height:8px;border-radius:999px;width:{{ d.w }};background:{{ d.bg }};transition:all .3s"></div></sc-for>
+          </div>
+          <button onClick="{{ obNext }}" style="background:#d4ff3a;color:#0e0e10;border-radius:999px;padding:16px 26px;font-family:Caprasimo;font-size:17px" style-active="transform:scale(.96)">{{ obCta }}</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.home }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:44px 0 96px;overflow:hidden;animation:ag-in .3s ease-out">
+        <div style="padding:18px 24px 0;display:flex;justify-content:space-between;align-items:center">
+          <div style="font-family:Caprasimo;font-size:20px">Alarmageddon</div>
+          <button onClick="{{ testRing }}" style="background:#3a1534;color:#ffc9f3;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700" style-hover="background:#ff4fd8;color:#0e0e10">Test the doom</button>
+        </div>
+        <sc-if value="{{ hasNext }}" hint-placeholder-val="{{ true }}">
+          <div onClick="{{ next.edit }}" style="padding:26px 24px 0;cursor:pointer">
+            <div style="font-size:13px;color:#9a9aa3">Doom arrives in {{ doomIn }}</div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-top:6px;color:#d4ff3a"><span style="font-family:Caprasimo;font-size:108px;line-height:.9">{{ next.time }}</span><span style="font-family:Caprasimo;font-size:22px">{{ next.ap }}</span></div>
+            <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+              <div style="background:color-mix(in oklab,#d4ff3a 22%,#0e0e10);font-size:12px;padding:5px 12px;border-radius:999px">{{ next.ch }}</div>
+              <div style="background:#1c1c21;font-size:12px;padding:5px 12px;border-radius:999px;color:#9a9aa3">{{ next.days }}</div>
+              <div style="background:#3a1534;color:#ffc9f3;font-size:12px;padding:5px 12px;border-radius:999px">{{ streak }}-day streak</div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noNext }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:26px 24px 0"><div style="font-family:Caprasimo;font-size:40px;line-height:1.05">No alarms on.</div><div style="font-size:14px;color:#9a9aa3;margin-top:8px">Sleeping in? Bold. I respect it. I don't like it.</div></div>
+        </sc-if>
+        <div style="flex:1;overflow-y:auto;scrollbar-width:none;overflow-x:hidden;padding:30px 24px 0;display:flex;flex-direction:column;gap:20px">
+          <div style="font-size:11px;letter-spacing:.12em;color:#9a9aa3;font-weight:700">ALSO SCHEDULED</div>
+          <sc-for list="{{ others }}" as="a" hint-placeholder-count="2">
+            <div onClick="{{ a.edit }}" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+              <div style="opacity:{{ a.op }}"><div style="font-family:Caprasimo;font-size:30px;line-height:1.1">{{ a.time }}<span style="font-size:14px"> {{ a.ap }}</span></div><div style="font-size:12px;color:#9a9aa3">{{ a.days }} · {{ a.ch }}</div></div>
+              <button onClick="{{ a.toggle }}" aria-label="Toggle alarm" style="width:50px;height:30px;border-radius:999px;background:{{ a.tbg }};display:flex;justify-content:{{ a.tj }};padding:3px;transition:background .2s"><div style="width:24px;height:24px;border-radius:50%;background:{{ a.tk }}"></div></button>
+            </div>
+          </sc-for>
+        </div>
+        <button onClick="{{ newAlarm }}" aria-label="New alarm" style="position:absolute;right:24px;bottom:110px;width:64px;height:64px;border-radius:50%;background:#d4ff3a;color:#0e0e10;font-family:Caprasimo;font-size:32px;box-shadow:0 8px 24px rgba(212,255,58,.25)" style-active="transform:scale(.92)">+</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.edit }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:44px 0 0;overflow:hidden;animation:ag-in .3s ease-out">
+        <div style="padding:16px 20px 0;display:flex;justify-content:space-between;align-items:center">
+          <button onClick="{{ goHome }}" style="background:#1c1c21;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600">Cancel</button>
+          <div style="font-family:Caprasimo;font-size:18px">{{ editTitle }}</div>
+          <button onClick="{{ saveAlarm }}" style="background:#d4ff3a;color:#0e0e10;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700">Save</button>
+        </div>
+        <div style="flex:1;overflow-y:auto;scrollbar-width:none;overflow-x:hidden;padding:18px 20px 24px;display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px">
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <button onClick="{{ hUp }}" style="background:transparent;color:#9a9aa3;font-size:18px;padding:4px 20px">▲</button>
+              <div style="font-family:Caprasimo;font-size:84px;line-height:1;color:#d4ff3a;width:110px;text-align:center">{{ draftH }}</div>
+              <button onClick="{{ hDown }}" style="background:transparent;color:#9a9aa3;font-size:18px;padding:4px 20px">▼</button>
+            </div>
+            <div style="font-family:Caprasimo;font-size:70px;color:#45454d;margin-top:-6px">:</div>
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <button onClick="{{ mUp }}" style="background:transparent;color:#9a9aa3;font-size:18px;padding:4px 20px">▲</button>
+              <div style="font-family:Caprasimo;font-size:84px;line-height:1;color:#d4ff3a;width:120px;text-align:center">{{ draftM }}</div>
+              <button onClick="{{ mDown }}" style="background:transparent;color:#9a9aa3;font-size:18px;padding:4px 20px">▼</button>
+            </div>
+            <button onClick="{{ apToggle }}" style="background:#1c1c21;border-radius:999px;padding:10px 12px;font-family:Caprasimo;font-size:16px;margin-left:4px">{{ draftAp }}</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:11px;letter-spacing:.12em;color:#9a9aa3;font-weight:700">REPEAT</div>
+            <div style="display:flex;justify-content:space-between">
+              <sc-for list="{{ dayChips }}" as="d" hint-placeholder-count="7">
+                <button onClick="{{ d.toggle }}" style="width:40px;height:40px;border-radius:50%;font-weight:700;font-size:13px;background:{{ d.bg }};color:{{ d.fg }};transition:background .15s">{{ d.l }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:11px;letter-spacing:.12em;color:#9a9aa3;font-weight:700">CHALLENGE</div>
+            <div style="background:#d4ff3a;color:#0e0e10;border-radius:28px;padding:18px 20px;transform:rotate(-1.5deg);display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <div><div style="font-family:Caprasimo;font-size:22px">Surprise me</div><div style="font-size:12px;margin-top:4px;line-height:1.35">Rolled at random from: {{ poolText }}</div></div>
+              <div style="font-family:Caprasimo;font-size:34px;transform:rotate(8deg)">?</div>
+            </div>
+            <button onClick="{{ goSettings }}" style="background:transparent;color:#9a9aa3;font-size:12px;text-align:left;padding:2px 0">Change the pool in Settings</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:11px;letter-spacing:.12em;color:#9a9aa3;font-weight:700">DIFFICULTY</div>
+            <div style="display:flex;background:#1c1c21;border-radius:999px;padding:4px">
+              <sc-for list="{{ diffs }}" as="d" hint-placeholder-count="3">
+                <button onClick="{{ d.pick }}" style="flex:1;border-radius:999px;padding:11px 4px;font-size:13px;font-weight:700;background:{{ d.bg }};color:{{ d.fg }}">{{ d.l }}</button>
+              </sc-for>
+            </div>
+            <div style="font-size:12px;color:#9a9aa3">{{ diffNote }}</div>
+          </div>
+          <sc-if value="{{ canDelete }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ deleteAlarm }}" style="background:transparent;color:#ff4fd8;font-weight:700;font-size:14px;padding:8px">Delete alarm</button>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.ring }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden">
+        <div style="position:absolute;width:520px;height:520px;border-radius:50%;background:color-mix(in oklab,#d4ff3a 18%,#0e0e10);left:-78px;top:120px;animation:ag-pulse 1.3s ease-in-out infinite"></div>
+        <div style="position:absolute;width:400px;height:400px;border-radius:50%;background:color-mix(in oklab,#d4ff3a 40%,#0e0e10);left:-18px;top:180px;animation:ag-pulse 1.3s ease-in-out .33s infinite"></div>
+        <div style="position:absolute;width:280px;height:280px;border-radius:50%;background:#d4ff3a;left:42px;top:240px;animation:ag-pulse .65s ease-in-out infinite"></div>
+        <div style="position:absolute;left:182px;top:380px;width:0;height:0">
+          <div style="position:absolute;width:280px;height:280px;left:-140px;top:-140px;border-radius:50%;border:3px solid #d4ff3a;animation:ag-ripple 1.96s ease-out infinite"></div>
+          <div style="position:absolute;width:280px;height:280px;left:-140px;top:-140px;border-radius:50%;border:3px solid #d4ff3a;animation:ag-ripple 1.96s ease-out .65s infinite"></div>
+          <div style="position:absolute;width:280px;height:280px;left:-140px;top:-140px;border-radius:50%;border:3px solid #d4ff3a;animation:ag-ripple 1.96s ease-out 1.3s infinite"></div>
+        </div>
+        <div style="position:absolute;left:-40px;right:-40px;top:104px;transform:rotate(-6deg);background:#ff4fd8;color:#0e0e10;overflow:hidden;padding:8px 0;white-space:nowrap"><div style="display:inline-block;font-family:Caprasimo;font-size:20px;animation:ag-marq 9s linear infinite">GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · GET UP · </div></div>
+        <div style="position:absolute;left:24px;right:24px;top:50px;font-size:15px;line-height:1.35;text-wrap:pretty">{{ roast }}</div>
+        <div style="position:absolute;left:-40px;right:-40px;top:500px;transform:rotate(5deg);background:#f5f5f2;color:#0e0e10;overflow:hidden;padding:8px 0;white-space:nowrap"><div style="display:inline-block;font-family:Caprasimo;font-size:20px;animation:ag-marq 12s linear infinite reverse">SNOOZE IS FOR QUITTERS · SNOOZE IS FOR QUITTERS · SNOOZE IS FOR QUITTERS · SNOOZE IS FOR QUITTERS · SNOOZE IS FOR QUITTERS · SNOOZE IS FOR QUITTERS · </div></div>
+        <div style="position:absolute;left:182px;top:380px;transform:translate(-50%,-50%);text-align:center">
+          <div style="font-family:Caprasimo;font-size:88px;line-height:1;color:#0e0e10;animation:ag-shake .18s steps(2) infinite;text-shadow:3px 0 0 #ff4fd8;white-space:nowrap">{{ ringTime }}</div>
+        </div>
+        <div style="flex:1"></div>
+        <div style="position:relative;padding:0 20px 28px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:11px;letter-spacing:.12em;font-weight:700;color:#ff4fd8;text-align:center">TODAY'S PUNISHMENT</div>
+            <div style="position:relative;height:56px;border-radius:999px;background:#1c1c21;overflow:hidden;box-shadow:inset 0 0 0 3px {{ reelRing }}">
+              <div style="position:absolute;left:0;right:0;top:0;transform:translateY({{ reelY }}px);transition:{{ reelTrans }}">
+                <sc-for list="{{ reel }}" as="r" hint-placeholder-count="1"><div style="height:56px;display:grid;place-items:center;font-family:Caprasimo;font-size:24px;color:{{ r.c }}">{{ r.l }}</div></sc-for>
+              </div>
+              <div style="position:absolute;inset:0;background:linear-gradient(#1c1c21,transparent 30%,transparent 70%,#1c1c21);pointer-events:none"></div>
+            </div>
+          </div>
+          <sc-if value="{{ spinning }}" hint-placeholder-val="{{ false }}">
+            <div style="border-radius:999px;padding:18px;text-align:center;font-family:Caprasimo;font-size:19px;background:#2e2e35;color:#9a9aa3">Rolling…</div>
+          </sc-if>
+          <sc-if value="{{ spun }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ startChallenge }}" style="background:#d4ff3a;color:#0e0e10;border-radius:999px;padding:18px;font-family:Caprasimo;font-size:19px;animation:ag-pop .45s ease-out,ag-wobble 1.3s ease-in-out .45s infinite">{{ ringCta }}</button>
+          </sc-if>
+          <button onClick="{{ openSkip }}" style="background:transparent;text-align:center;font-size:12px;color:#9a9aa3;padding:4px">Emergency skip · burns {{ streak }} days</button>
+        </div>
+        <sc-if value="{{ sheet }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeSkip }}" style="position:absolute;inset:0;background:rgba(14,14,16,.7);z-index:10"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;z-index:11;background:#1c1c21;border-radius:36px 36px 0 0;padding:28px 24px 30px;display:flex;flex-direction:column;gap:12px;animation:ag-sheet .25s ease-out">
+            <div style="font-family:Caprasimo;font-size:28px;line-height:1.1">Burn {{ streak }} days for 5 more minutes?</div>
+            <div style="font-size:14px;color:#9a9aa3">{{ skips }} emergency skips left this month. Your streak goes to zero, and I'll remember.</div>
+            <button onClick="{{ closeSkip }}" style="background:#d4ff3a;color:#0e0e10;border-radius:999px;padding:16px;font-family:Caprasimo;font-size:17px;margin-top:6px">Fine, I'll do it</button>
+            <button onClick="{{ burnSkip }}" style="background:#3a1534;color:#ffc9f3;border-radius:999px;padding:16px;font-weight:700;font-size:15px">Burn it</button>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.beat }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:44px;overflow:hidden">
+        <div style="position:absolute;left:182px;top:350px;width:0;height:0"><div style="position:absolute;width:320px;height:320px;left:-160px;top:-160px;border-radius:50%;background:color-mix(in oklab,#d4ff3a 14%,#0e0e10);animation:ag-thump {{ beatDur }}s ease-out infinite"></div></div>
+        <div style="position:relative;padding:18px 24px 0;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#9a9aa3">
+          <span>Round {{ beat.round }} / 2 · {{ bpm }} BPM</span>
+          <button onClick="{{ toggleMic }}" style="background:{{ micBg }};color:{{ micFg }};border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700">{{ micLabel }}</button>
+        </div>
+        <div style="position:relative;padding:6px 24px 0;font-family:Caprasimo;font-size:22px">{{ beatHead }}</div>
+        <div style="position:relative;flex:1;display:grid;grid-template-columns:1fr 1fr;align-content:center;column-gap:12px;row-gap:6px;padding:0 24px">
+          <sc-for list="{{ beatWords }}" as="w" hint-placeholder-count="8">
+            <div style="font-family:Caprasimo;font-size:34px;line-height:1.15;color:{{ w.color }};transform:{{ w.tf }};transform-origin:left center;transition:transform .08s,color .08s">{{ w.w }}</div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ counting }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;right:24px;top:96px;pointer-events:none"><div style="width:56px;height:56px;border-radius:50%;background:#ff4fd8;color:#0e0e10;display:grid;place-items:center;font-family:Caprasimo;font-size:30px">{{ countText }}</div></div>
+        </sc-if>
+        <div style="position:relative;padding:0 24px 28px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;gap:6px">
+            <sc-for list="{{ beatSegs }}" as="s" hint-placeholder-count="8"><div style="flex:1;height:10px;border-radius:999px;background:{{ s.bg }}"></div></sc-for>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <button onClick="{{ tapBeat }}" style="width:96px;height:96px;border-radius:50%;background:#d4ff3a;color:#0e0e10;font-family:Caprasimo;font-size:20px;flex:none;box-shadow:0 0 0 6px color-mix(in oklab,#d4ff3a 25%,#0e0e10)" style-active="transform:scale(.9)">SING</button>
+            <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:3px;height:36px">
+                <sc-for list="{{ eq }}" as="e" hint-placeholder-count="18"><div style="flex:1;height:100%;border-radius:999px;background:{{ e.bg }};transform:scaleY(.2);animation:ag-eq {{ e.d }}s ease-in-out {{ e.delay }}s infinite alternate"></div></sc-for>
+              </div>
+              <div style="font-size:12px;color:#9a9aa3;line-height:1.35">{{ beatHint }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.beatFail }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:44px;overflow:hidden">
+        <div style="position:absolute;inset:0;background:#ff4fd8;animation:ag-flash 2.8s ease-out 1 forwards;opacity:0"></div>
+        <div style="position:relative;padding:36px 24px 0;animation:ag-shake .25s steps(2) 6">
+          <div style="font-size:13px;letter-spacing:.12em;font-weight:700;color:#ff4fd8">BEAT {{ fail.n }} OF 8</div>
+          <div style="font-family:Caprasimo;font-size:84px;line-height:.95;color:#d4ff3a">Missed.</div>
+          <div style="font-size:17px;margin-top:10px;line-height:1.35;text-wrap:pretty">It was "{{ fail.word }}". {{ fail.roast }}</div>
+        </div>
+        <div style="position:relative;flex:1">
+          <sc-for list="{{ fail.fall }}" as="f" hint-placeholder-count="8">
+            <div style="position:absolute;left:{{ f.x }}px;top:{{ f.y }}px;font-family:Caprasimo;font-size:30px;color:#45454d;animation:ag-fall 2.8s cubic-bezier(.5,0,.9,.5) {{ f.d }}s 1 forwards;--r:{{ f.r }}deg">{{ f.w }}</div>
+          </sc-for>
+        </div>
+        <div style="position:relative;padding:0 20px 28px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:12px;color:#9a9aa3;text-align:center">New words incoming</div>
+          <div style="background:#3a1534;color:#ffc9f3;border-radius:999px;padding:15px;text-align:center;font-family:Caprasimo;font-size:16px;white-space:nowrap">{{ fail.next }}</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.scan }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:44px;overflow:hidden">
+        <div style="padding:18px 24px 0">
+          <div style="font-size:13px;color:#9a9aa3">Scan challenge</div>
+          <div style="font-family:Caprasimo;font-size:34px;line-height:1.05;margin-top:2px">Go find <span style="color:#ff4fd8">{{ scan.target }}</span>.</div>
+        </div>
+        <div style="flex:1;padding:18px 20px;display:flex">
+          <div style="flex:1;position:relative;border-radius:36px;overflow:hidden;background:repeating-linear-gradient(135deg,#1c1c21 0 12px,#17171b 12px 24px)">
+            <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#45454d">live camera feed</div>
+            <div style="position:absolute;left:18px;top:18px;width:44px;height:44px;border-left:5px solid #d4ff3a;border-top:5px solid #d4ff3a;border-radius:18px 0 0 0"></div>
+            <div style="position:absolute;right:18px;top:18px;width:44px;height:44px;border-right:5px solid #d4ff3a;border-top:5px solid #d4ff3a;border-radius:0 18px 0 0"></div>
+            <div style="position:absolute;left:18px;bottom:18px;width:44px;height:44px;border-left:5px solid #d4ff3a;border-bottom:5px solid #d4ff3a;border-radius:0 0 0 18px"></div>
+            <div style="position:absolute;right:18px;bottom:18px;width:44px;height:44px;border-right:5px solid #d4ff3a;border-bottom:5px solid #d4ff3a;border-radius:0 0 18px 0"></div>
+            <sc-if value="{{ scan.scanning }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;left:24px;right:24px;height:4px;border-radius:999px;background:#d4ff3a;box-shadow:0 0 24px 6px rgba(212,255,58,.5);animation:ag-scan 1.4s ease-in-out infinite"></div>
+            </sc-if>
+            <sc-if value="{{ scan.found }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;inset:0;display:grid;place-items:center;background:rgba(14,14,16,.55)"><div style="background:#d4ff3a;color:#0e0e10;border-radius:999px;padding:14px 22px;font-family:Caprasimo;font-size:22px;animation:ag-pop .5s ease-out;transform:rotate(-4deg)">{{ scan.foundLabel }}</div></div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="padding:0 20px 28px;display:flex;flex-direction:column;gap:10px">
+          <div style="text-align:center;font-size:13px;color:#9a9aa3">{{ scan.hint }}</div>
+          <button onClick="{{ scan.action }}" style="background:#d4ff3a;color:#0e0e10;border-radius:999px;padding:18px;font-family:Caprasimo;font-size:19px" style-active="transform:scale(.97)">{{ scan.cta }}</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.math }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:44px;overflow:hidden">
+        <div style="padding:18px 24px 0;display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:13px;color:#9a9aa3">Math · {{ math.step }} of 3</div>
+          <div style="display:flex;gap:6px"><sc-for list="{{ math.dots }}" as="d" hint-placeholder-count="3"><div style="width:26px;height:8px;border-radius:999px;background:{{ d.bg }}"></div></sc-for></div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 24px;gap:14px">
+          <div style="font-family:Caprasimo;font-size:52px;line-height:1;animation:{{ math.anim }}">{{ math.q }}</div>
+          <div style="height:76px;border-radius:999px;background:#1c1c21;display:flex;align-items:center;padding:0 26px;font-family:Caprasimo;font-size:44px;color:#d4ff3a;box-shadow:inset 0 0 0 2px {{ math.ring }}">{{ math.input }}<span style="width:3px;height:40px;background:#d4ff3a;margin-left:4px;animation:ag-blink 1s steps(1) infinite"></span></div>
+          <div style="font-size:14px;color:{{ math.msgColor }};min-height:20px">{{ math.msg }}</div>
+        </div>
+        <div style="padding:0 20px 26px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <sc-for list="{{ keys }}" as="k" hint-placeholder-count="12">
+            <button onClick="{{ k.press }}" style="height:62px;border-radius:999px;background:{{ k.bg }};color:{{ k.fg }};font-family:Caprasimo;font-size:24px" style-active="transform:scale(.94)">{{ k.l }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.shake }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:44px;overflow:hidden;animation:{{ shakeAnim }}">
+        <div style="padding:18px 24px 0">
+          <div style="font-size:13px;color:#9a9aa3">Shake challenge</div>
+          <div style="font-family:Caprasimo;font-size:34px;line-height:1.05;margin-top:2px">Shake me like you mean it.</div>
+        </div>
+        <div style="flex:1;display:grid;place-items:center">
+          <div style="width:260px;height:260px;border-radius:50%;background:conic-gradient(#d4ff3a {{ shakePct }}%, #1c1c21 0);display:grid;place-items:center">
+            <div style="width:212px;height:212px;border-radius:50%;background:#0e0e10;display:flex;flex-direction:column;align-items:center;justify-content:center">
+              <div style="font-family:Caprasimo;font-size:84px;line-height:1;color:#d4ff3a">{{ shakeN }}</div>
+              <div style="font-size:13px;color:#9a9aa3">of {{ shakeTarget }} shakes</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:0 20px 28px;display:flex;flex-direction:column;gap:10px">
+          <div style="text-align:center;font-size:14px;line-height:1.35">{{ shakeMsg }}</div>
+          <button onClick="{{ fakeShake }}" style="background:#1c1c21;border-radius:999px;padding:16px;font-weight:700;font-size:14px;color:#9a9aa3" style-active="transform:scale(.97)">No motion sensor? Tap to shake</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.skip }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:44px;overflow:hidden">
+        <div style="padding:36px 24px 0"><div style="font-size:13px;color:#9a9aa3">Emergency skip used</div><div style="font-family:Caprasimo;font-size:32px;line-height:1.1;margin-top:4px">You chose violence against yourself.</div></div>
+        <div style="flex:1;display:grid;place-items:center">
+          <div style="position:relative;width:220px;height:200px">
+            <div style="position:absolute;inset:0;display:grid;place-items:center;font-family:Caprasimo;font-size:150px;line-height:1;color:#d4ff3a;animation:ag-crumble 3s ease-in 1 forwards">{{ lostStreak }}</div>
+            <div style="position:absolute;inset:0;display:grid;place-items:center;font-family:Caprasimo;font-size:150px;line-height:1;color:#45454d;animation:ag-appear 3s ease-out 1 forwards;opacity:0">0</div>
+          </div>
+        </div>
+        <div style="padding:0 24px 18px;display:flex;gap:5px">
+          <sc-for list="{{ lostBars }}" as="b" hint-placeholder-count="12"><div style="flex:1;height:26px;border-radius:999px;background:#ff4fd8;animation:ag-drop 3s ease-in {{ b.d }}s 1 forwards"></div></sc-for>
+        </div>
+        <div style="padding:0 20px 28px;display:flex;flex-direction:column;gap:10px">
+          <div style="text-align:center;font-size:12px;color:#9a9aa3">{{ skips }} skips left this month</div>
+          <button onClick="{{ goHome }}" style="background:#d4ff3a;color:#0e0e10;border-radius:999px;padding:18px;font-family:Caprasimo;font-size:19px">Fine. I'm awake.</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.success }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:44px;overflow:hidden;background:#d4ff3a;color:#0e0e10">
+        <div style="position:absolute;left:-40px;right:-40px;top:110px;transform:rotate(-5deg);background:#0e0e10;color:#d4ff3a;overflow:hidden;padding:8px 0;white-space:nowrap"><div style="display:inline-block;font-family:Caprasimo;font-size:20px;animation:ag-marq 10s linear infinite">YOU'RE UP · YOU'RE UP · YOU'RE UP · YOU'RE UP · YOU'RE UP · YOU'RE UP · YOU'RE UP · YOU'RE UP · YOU'RE UP · YOU'RE UP · YOU'RE UP · YOU'RE UP · </div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 28px;gap:10px">
+          <div style="font-family:Caprasimo;font-size:64px;line-height:.95">You're alive.</div>
+          <div style="font-size:17px;line-height:1.4">Up in {{ result.secs }} seconds. {{ result.roast }}</div>
+        </div>
+        <div style="padding:0 28px 22px;display:flex;align-items:center;gap:16px">
+          <div style="width:110px;height:110px;border-radius:50%;background:#0e0e10;color:#d4ff3a;display:grid;place-items:center;font-family:Caprasimo;font-size:54px;animation:ag-pop .7s ease-out">{{ streak }}</div>
+          <div style="font-size:15px;line-height:1.35;font-weight:600">day streak.<br>Don't get cocky.</div>
+        </div>
+        <div style="padding:0 20px 28px"><button onClick="{{ goHome }}" style="width:100%;background:#0e0e10;color:#d4ff3a;border-radius:999px;padding:18px;font-family:Caprasimo;font-size:19px">Start the day</button></div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.stats }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:44px 0 96px;overflow:hidden;animation:ag-in .3s ease-out">
+        <div style="flex:1;overflow-y:auto;scrollbar-width:none;overflow-x:hidden;padding:18px 24px 0;display:flex;flex-direction:column;gap:22px">
+          <div style="font-family:Caprasimo;font-size:20px">Your record</div>
+          <div>
+            <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:Caprasimo;font-size:120px;line-height:.85;color:#d4ff3a">{{ streak }}</span><span style="font-size:15px;color:#9a9aa3">mornings without<br>a skip</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:11px;letter-spacing:.12em;color:#9a9aa3;font-weight:700">SECONDS TO GET UP · THIS WEEK</div>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:140px">
+              <sc-for list="{{ week }}" as="d" hint-placeholder-count="7">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">
+                  <div style="font-size:10px;color:#9a9aa3">{{ d.s }}</div>
+                  <div style="width:100%;height:{{ d.h }}%;border-radius:14px;background:{{ d.bg }}"></div>
+                  <div style="font-size:11px;font-weight:700;color:#9a9aa3">{{ d.l }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:#1c1c21;border-radius:26px;padding:16px"><div style="font-family:Caprasimo;font-size:30px">41s</div><div style="font-size:12px;color:#9a9aa3">Fastest wake-up</div></div>
+            <div style="background:#1c1c21;border-radius:26px;padding:16px"><div style="font-family:Caprasimo;font-size:30px;color:#ff4fd8">{{ usedSkips }}</div><div style="font-size:12px;color:#9a9aa3">Skips this month</div></div>
+            <div style="background:#1c1c21;border-radius:26px;padding:16px"><div style="font-family:Caprasimo;font-size:30px">Parrot</div><div style="font-size:12px;color:#9a9aa3">Word you fail most</div></div>
+            <div style="background:#1c1c21;border-radius:26px;padding:16px"><div style="font-family:Caprasimo;font-size:30px">23</div><div style="font-size:12px;color:#9a9aa3">Cups scanned</div></div>
+          </div>
+          <div style="background:#3a1534;color:#ffc9f3;border-radius:26px 26px 26px 8px;padding:14px 16px;font-size:14px;line-height:1.4;margin-bottom:-2px">Thursday took you 3 minutes. I'm not mad. I'm writing it down.</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ is.settings }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:44px 0 96px;overflow:hidden;animation:ag-in .3s ease-out">
+        <div style="flex:1;overflow-y:auto;scrollbar-width:none;overflow-x:hidden;padding:18px 24px 0;display:flex;flex-direction:column;gap:22px">
+          <div style="font-family:Caprasimo;font-size:20px">Settings</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:11px;letter-spacing:.12em;color:#9a9aa3;font-weight:700">ROAST LEVEL</div>
+            <div style="display:flex;background:#1c1c21;border-radius:999px;padding:4px">
+              <sc-for list="{{ roastOpts }}" as="r" hint-placeholder-count="3"><button onClick="{{ r.pick }}" style="flex:1;border-radius:999px;padding:11px 4px;font-size:13px;font-weight:700;background:{{ r.bg }};color:{{ r.fg }}">{{ r.l }}</button></sc-for>
+            </div>
+            <div style="background:#1c1c21;border-radius:26px 26px 26px 8px;padding:12px 16px;font-size:13px;line-height:1.4;color:#f5f5f2">"{{ roastSample }}"</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:11px;letter-spacing:.12em;color:#9a9aa3;font-weight:700">CHALLENGE POOL</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ poolChips }}" as="p" hint-placeholder-count="4"><button onClick="{{ p.toggle }}" style="border-radius:999px;padding:10px 16px;font-size:14px;font-weight:700;background:{{ p.bg }};color:{{ p.fg }};transform:{{ p.tf }};transition:all .15s">{{ p.l }}</button></sc-for>
+            </div>
+            <div style="font-size:12px;color:{{ poolMsgC }}">{{ poolMsg }}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <div style="font-size:11px;letter-spacing:.12em;color:#9a9aa3;font-weight:700">BEHAVIOUR</div>
+            <sc-for list="{{ toggles }}" as="t" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <div><div style="font-size:15px;font-weight:600">{{ t.l }}</div><div style="font-size:12px;color:#9a9aa3">{{ t.d }}</div></div>
+                <button onClick="{{ t.toggle }}" style="flex:none;width:50px;height:30px;border-radius:999px;background:{{ t.tbg }};display:flex;justify-content:{{ t.tj }};padding:3px;transition:background .2s"><div style="width:24px;height:24px;border-radius:50%;background:{{ t.tk }}"></div></button>
+              </div>
+            </sc-for>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div><div style="font-size:15px;font-weight:600">Emergency skips</div><div style="font-size:12px;color:#9a9aa3">Per month. Each one resets your streak.</div></div>
+              <div style="display:flex;align-items:center;gap:8px"><button onClick="{{ skipDown }}" style="width:32px;height:32px;border-radius:50%;background:#1c1c21;font-weight:700">−</button><span style="font-family:Caprasimo;font-size:20px;width:20px;text-align:center">{{ skipQuota }}</span><button onClick="{{ skipUp }}" style="width:32px;height:32px;border-radius:50%;background:#1c1c21;font-weight:700">+</button></div>
+            </div>
+          </div>
+          <button onClick="{{ replayOnboard }}" style="background:#1c1c21;border-radius:999px;padding:14px;font-weight:700;font-size:14px">Replay onboarding</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ showTabs }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:16px;right:16px;bottom:22px;z-index:15;display:flex;gap:6px;background:#1c1c21;border-radius:999px;padding:6px">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+          <button onClick="{{ t.go }}" style="flex:1;border-radius:999px;padding:13px 4px;font-size:13px;font-weight:700;background:{{ t.bg }};color:{{ t.fg }};transition:background .2s">{{ t.l }}</button>
+        </sc-for>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;bpm&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:92,&quot;min&quot;:60,&quot;max&quot;:140,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Challenges&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Onboarding&quot;,&quot;options&quot;:[&quot;Onboarding&quot;,&quot;Home&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+const PAIRS=[['Carrot','Parrot'],['Bake','Cake'],['Sheep','Ship'],['Pickle','Tickle'],['Moon','Spoon'],['Bread','Bed'],['Fox','Socks'],['Mouse','House'],['Beard','Weird']];
+const OBJECTS=['a cup','the sink','your toothbrush','a shoe','the fridge','a spoon','a towel'];
+const CH={beat:['Sing on beat','8 rhyming words, one per beat','Face the beat'],scan:['Scan a thing','I pick an object, you find it','Find the thing'],math:['Math','Three sums, no calculator','Do the math'],shake:['Shake it','30 hard shakes','Shake it off']};
+const ROASTS={
+  Mild:['Good morning! Time to get up.','Rise and shine. Mostly rise.','The day is waiting. Politely.'],
+  Savage:["Get up. The bed isn't paying rent.","Snooze isn't an option. You knew that when you installed me.","Your future self called. They're disappointed."],
+  Unhinged:['I will ring until the sun burns out.','Every second you lie there, a parrot loses its carrot.','Wake up or I start texting your mum.']};
+const FAILR=["Embarrassing for both of us.","Your tongue filed a complaint.","Try using your mouth this time.","Bold strategy. Didn't work."];
+const DAYL=['M','T','W','T','F','S','S'];
+const SCREENS=[['onboard','Onboarding'],['home','Alarms'],['edit','Create / edit'],['ring','Ringing'],['beat','Sing on beat'],['beatFail','Beat: missed'],['scan','Scan object'],['math','Math'],['shake','Shake'],['skip','Skip penalty'],['success','Woke up'],['stats','Stats'],['settings','Settings']];
+const pad=n=>String(n).padStart(2,'0');
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function fmt(h,m){return {time:((h+11)%12+1)+':'+pad(m),ap:h<12?'am':'pm'};}
+function dayText(d){const s=d.join('');if(s==='1111111')return 'Every day';if(s==='1111100')return 'Weekdays';if(s==='0000011')return 'Weekends';if(s==='0000000')return 'Once';const n=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];return d.map((v,i)=>v?n[i]:null).filter(Boolean).join(', ');}
+function genWords(){const p=pick(PAIRS);let w;do{w=Array.from({length:8},()=>p[Math.random()<.5?0:1]);}while(new Set(w).size<2||w.join()===w.slice().sort().join());return w;}
+function genQ(diff){const big=diff==='Apocalyptic',mild=diff==='Mild';const a=mild?3+Math.floor(Math.random()*7):6+Math.floor(Math.random()*(big?20:12));const b=3+Math.floor(Math.random()*(big?9:6));const c=2+Math.floor(Math.random()*30);return {q:a+' × '+b+' + '+c,ans:a*b+c};}
+
+class Component extends DCLogic{
+  state={screen:(this.props.startScreen||'Onboarding')==='Home'?'home':'onboard',ob:0,
+    alarms:[{id:1,h:6,m:30,days:[1,1,1,1,1,0,0],ch:'beat',on:true,diff:'Spicy'},{id:2,h:8,m:0,days:[0,0,0,0,0,1,0],ch:'scan',on:true,diff:'Spicy'},{id:3,h:10,m:15,days:[0,0,0,0,0,0,1],ch:'shake',on:false,diff:'Mild'}],
+    streak:12,lostStreak:12,skips:2,skipQuota:3,draft:null,ringAlarm:null,roastLine:'',sheet:false,
+    beat:null,fail:null,math:null,shakeN:0,jolt:false,scan:null,result:null,
+    pool:{beat:true,scan:true,math:true,shake:true},rolled:'beat',reel:[],reelPos:0,spinning:false,poolWarn:false,roast:'Savage',escalate:true,vibrate:true,flash:true,mic:false,micErr:false,tick:0};
+  get B(){return 60000/(this.props.bpm||92);}
+  componentDidMount(){this.clockT=setInterval(()=>this.setState(s=>({tick:s.tick+1})),30000);}
+  componentWillUnmount(){clearTimeout(this.spinA);clearTimeout(this.spinB);clearInterval(this.clockT);this.stopBeat();clearTimeout(this.failT);this.stopMic();this.stopMotion();}
+  leave(){this.stopBeat();clearTimeout(this.failT);clearTimeout(this.scanT);this.stopMotion();}
+  go(screen,extra){this.leave();this.setState({screen,sheet:false,...(extra||{})});}
+  currentAlarm(){return this.state.ringAlarm||this.state.alarms[0];}
+  ring(a){this.ringStart=Date.now();const keys=Object.keys(CH).filter(k=>this.state.pool[k]);const rolled=pick(keys);
+    const reel=[];for(let i=0;i<17;i++)reel.push(keys[(i+Math.floor(Math.random()*keys.length))%keys.length]);reel.push(rolled);
+    this.go('ring',{ringAlarm:a,roastLine:pick(ROASTS[this.state.roast]),rolled,reel,reelPos:0,spinning:true});
+    clearTimeout(this.spinA);clearTimeout(this.spinB);this.spinA=setTimeout(()=>this.setState({reelPos:reel.length-1}),80);this.spinB=setTimeout(()=>this.setState({spinning:false}),2500);}
+  startChallenge(){if(this.state.spinning)return;({beat:()=>this.startRound(1),scan:()=>this.startScan(),math:()=>this.startMath(),shake:()=>this.startShake()})[this.state.rolled]();}
+  // beat
+  startRound(round,words){this.leave();const B=this.B;this.t0=performance.now()+4*B;
+    this.setState({screen:'beat',sheet:false,beat:{words:words||genWords(),hits:Array(8).fill(false),round,idx:-4,cleared:false,last:''}});
+    this.beatT=setInterval(()=>this.beatTick(),20);}
+  stopBeat(){clearInterval(this.beatT);this.beatT=null;}
+  win(){return Math.min(260,this.B*.42);}
+  beatTick(){const b=this.state.beat;if(!b||b.cleared)return;const now=performance.now(),B=this.B,W=this.win();
+    for(let k=0;k<8;k++){if(!b.hits[k]&&now>this.t0+k*B+W){return this.failBeat(k);}}
+    if(now>this.t0+7*B+W){return this.roundDone();}
+    const idx=Math.floor((now-this.t0)/B+.5);if(idx!==b.idx)this.setState({beat:{...b,idx}});}
+  tapBeat(){const b=this.state.beat;if(!b||b.cleared||!this.beatT)return;const now=performance.now(),B=this.B;const k=Math.round((now-this.t0)/B);
+    if(k<0||k>7)return;if(Math.abs(now-(this.t0+k*B))<=this.win()&&!b.hits[k]){const hits=b.hits.slice();hits[k]=true;this.setState({beat:{...b,hits,last:pick(['Nice.','On it.','Clean.','Again.','Okay, singer.'])}});}}
+  failBeat(k){this.stopBeat();const b=this.state.beat;const next=genWords();
+    this.setState({screen:'beatFail',fail:{n:k+1,word:b.words[k],roast:pick(FAILR),next:next.slice(0,3).join(' · ')+'…',
+      fall:b.words.map((w,i)=>({w,x:24+(i%2)*150,y:10+Math.floor(i/2)*38,d:(i*.1).toFixed(2),r:(i%2?1:-1)*(20+i*9)}))}});
+    this.failT=setTimeout(()=>this.startRound(b.round,next),2800);}
+  roundDone(){this.stopBeat();const b=this.state.beat;this.setState({beat:{...b,cleared:true,idx:8}});
+    this.failT=setTimeout(()=>b.round<2?this.startRound(b.round+1):this.winChallenge(),1100);}
+  async toggleMic(){if(this.state.mic){this.stopMic();return this.setState({mic:false});}
+    try{this.stream=await navigator.mediaDevices.getUserMedia({audio:true});const ctx=this.actx=new (window.AudioContext||window.webkitAudioContext)();const an=ctx.createAnalyser();an.fftSize=512;ctx.createMediaStreamSource(this.stream).connect(an);const buf=new Float32Array(an.fftSize);let above=false,lastT=0;
+      const loop=()=>{an.getFloatTimeDomainData(buf);let s=0;for(const v of buf)s+=v*v;const rms=Math.sqrt(s/buf.length);const now=performance.now();
+        if(rms>.06&&!above&&now-lastT>180){above=true;lastT=now;this.tapBeat();}else if(rms<.03)above=false;this.micRaf=requestAnimationFrame(loop);};loop();
+      this.setState({mic:true,micErr:false});}catch(e){this.setState({micErr:true});}}
+  stopMic(){cancelAnimationFrame(this.micRaf);if(this.stream)this.stream.getTracks().forEach(t=>t.stop());if(this.actx)this.actx.close();this.stream=null;this.actx=null;}
+  // scan
+  startScan(){this.go('scan',{scan:{target:pick(OBJECTS),phase:'aim'}});}
+  doScan(){const s=this.state.scan;if(s.phase==='aim'){this.setState({scan:{...s,phase:'scanning'}});this.scanT=setTimeout(()=>this.setState({scan:{...this.state.scan,phase:'found'}}),2200);}else if(s.phase==='found')this.winChallenge();}
+  // math
+  startMath(){const a=this.currentAlarm();this.go('math',{math:{n:0,...genQ(a.diff),input:'',wrong:false,ok:false}});}
+  key(k){const m=this.state.math;if(!m)return;if(k==='del')return this.setState({math:{...m,input:m.input.slice(0,-1),wrong:false}});
+    if(k==='ok'){if(!m.input)return;if(+m.input===m.ans){const n=m.n+1;if(n>=3)return this.winChallenge();return this.setState({math:{...m,n,...genQ(this.currentAlarm().diff),input:'',wrong:false,ok:true}});}
+      this.setState({math:{...m,input:'',wrong:true,wrongN:(m.wrongN||0)+1,ok:false}});return;}
+    if(m.input.length<5)this.setState({math:{...m,input:m.input+k,wrong:false}});}
+  // shake
+  startShake(){this.go('shake',{shakeN:0});this.lastShake=0;
+    this.onMotion=e=>{const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;const mag=Math.sqrt((a.x||0)**2+(a.y||0)**2+(a.z||0)**2);if(mag>22&&performance.now()-this.lastShake>220){this.lastShake=performance.now();this.addShake();}};
+    window.addEventListener('devicemotion',this.onMotion);}
+  stopMotion(){if(this.onMotion)window.removeEventListener('devicemotion',this.onMotion);this.onMotion=null;}
+  shakeTarget(){const d=this.currentAlarm().diff;return d==='Mild'?20:d==='Apocalyptic'?50:30;}
+  addShake(){if(this.state.screen!=='shake')return;const n=this.state.shakeN+1;if(n>=this.shakeTarget()){this.setState({shakeN:n});return setTimeout(()=>this.winChallenge(),300);}
+    this.setState({shakeN:n,jolt:true});clearTimeout(this.joltT);this.joltT=setTimeout(()=>this.setState({jolt:false}),160);}
+  winChallenge(){const secs=this.ringStart?Math.max(8,Math.round((Date.now()-this.ringStart)/1000)):48;
+    this.go('success',{streak:this.state.streak+1,result:{secs,roast:secs<60?'Annoyingly efficient.':secs<180?'Acceptable. Barely.':'I aged waiting.'}});}
+  // edit
+  editAlarm(a){this.go('edit',{draft:{...a,days:a.days.slice()}});}
+  newAlarm(){this.go('edit',{draft:{id:null,h:7,m:0,days:[1,1,1,1,1,0,0],ch:'beat',on:true,diff:'Spicy'}});}
+  setDraft(p){this.setState({draft:{...this.state.draft,...p}});}
+  saveAlarm(){const d=this.state.draft;let alarms;if(d.id)alarms=this.state.alarms.map(a=>a.id===d.id?{...d,on:true}:a);else alarms=[...this.state.alarms,{...d,id:Date.now(),on:true}];this.go('home',{alarms});}
+  renderVals(){
+    const s=this.state,C=this.currentAlarm();const is={};SCREENS.forEach(([k])=>is[k]=s.screen===k);
+    const now=new Date();const clock=s.screen==='ring'&&s.ringAlarm?fmt(s.ringAlarm.h,s.ringAlarm.m).time:now.getHours()%12||12;
+    const clockStr=typeof clock==='string'?clock:clock+':'+pad(now.getMinutes());
+    const toggleStyle=on=>({tbg:on?'#d4ff3a':'#2e2e35',tj:on?'flex-end':'flex-start',tk:on?'#0e0e10':'#45454d'});
+    const sorted=s.alarms.slice().sort((a,b)=>(a.h*60+a.m)-(b.h*60+b.m));const nextA=sorted.find(a=>a.on);
+    let doomIn='';if(nextA){let diff=nextA.h*60+nextA.m-(now.getHours()*60+now.getMinutes());if(diff<=0)diff+=1440;doomIn=Math.floor(diff/60)+'h '+diff%60+'m';}
+    const card=a=>({...fmt(a.h,a.m),days:dayText(a.days),ch:'Surprise challenge',op:a.on?1:.4,edit:()=>this.editAlarm(a),
+      toggle:e=>{e.stopPropagation();this.setState({alarms:this.state.alarms.map(x=>x.id===a.id?{...x,on:!x.on}:x)});},...toggleStyle(a.on)});
+    const d=s.draft||{h:7,m:0,days:[0,0,0,0,0,0,0],ch:'beat',diff:'Spicy'};
+    const b=s.beat||{words:genWords(),hits:[],idx:-4,round:1};const B=this.B;
+    const beatWords=b.words.map((w,i)=>{const cur=i===b.idx&&!b.cleared;return {w,color:b.hits[i]?'#ff4fd8':cur?'#d4ff3a':'#45454d',tf:cur?'scale(1.1) rotate(-4deg)':'none'};});
+    const m=s.math||{n:0,q:'',input:''};
+    const scan=s.scan||{target:'a cup',phase:'aim'};
+    const tgt=this.shakeTarget();
+    const jumps=SCREENS.map(([k,l])=>({label:l,bg:s.screen===k?'#d4ff3a':'transparent',fg:s.screen===k?'#0e0e10':'#9a9aa3',go:()=>{
+      if(k==='beat')return this.startRound(1);if(k==='beatFail'){this.setState({beat:{words:genWords(),hits:[],round:1}});return setTimeout(()=>this.failBeat(4),0);}
+      if(k==='scan')return this.startScan();if(k==='math')return this.startMath();if(k==='shake')return this.startShake();if(k==='ring')return this.ring(s.alarms[0]);
+      if(k==='edit')return this.editAlarm(s.alarms[0]);if(k==='success'){this.ringStart=Date.now()-47000;return this.winChallenge();}
+      if(k==='skip')return this.go('skip',{lostStreak:s.streak||12,streak:0});if(k==='onboard')return this.go('onboard',{ob:0});this.go(k);}}));
+    const mk=(l,v,bg,fg)=>({l,bg:bg||'#1c1c21',fg:fg||'#f5f5f2',press:()=>this.key(v)});
+    return {
+      is,clock:clockStr,jumps,streak:s.streak,skips:s.skips,
+      ob:{s0:s.ob===0,s1:s.ob===1,s2:s.ob===2},obDots:[0,1,2].map(i=>({w:i===s.ob?'28px':'8px',bg:i===s.ob?'#d4ff3a':'#2e2e35'})),
+      obCta:s.ob===2?'Grant everything':'Next',obNext:()=>s.ob<2?this.setState({ob:s.ob+1}):this.go('home'),
+      hasNext:!!nextA,noNext:!nextA,next:nextA?{...card(nextA)}:{},doomIn,others:sorted.filter(a=>a!==nextA).map(card),
+      testRing:()=>this.ring(nextA||s.alarms[0]),newAlarm:()=>this.newAlarm(),goHome:()=>this.go('home'),
+      showTabs:is.home||is.stats||is.settings,
+      tabs:[['home','Alarms'],['stats','Stats'],['settings','Settings']].map(([k,l])=>({l,bg:s.screen===k?'#d4ff3a':'transparent',fg:s.screen===k?'#0e0e10':'#9a9aa3',go:()=>this.go(k)})),
+      editTitle:d.id?'Edit alarm':'New alarm',draftH:String((d.h+11)%12+1),draftM:pad(d.m),draftAp:d.h<12?'AM':'PM',
+      hUp:()=>this.setDraft({h:(d.h+1)%24}),hDown:()=>this.setDraft({h:(d.h+23)%24}),mUp:()=>this.setDraft({m:(d.m+5)%60}),mDown:()=>this.setDraft({m:(d.m+55)%60}),apToggle:()=>this.setDraft({h:(d.h+12)%24}),
+      dayChips:DAYL.map((l,i)=>({l,bg:d.days[i]?'#d4ff3a':'#1c1c21',fg:d.days[i]?'#0e0e10':'#9a9aa3',toggle:()=>{const days=d.days.slice();days[i]=days[i]?0:1;this.setDraft({days});}})),
+      chCards:Object.keys(CH).map((k,i)=>({label:CH[k][0],desc:CH[k][1],bg:d.ch===k?(i%2?'#ff4fd8':'#d4ff3a'):'#1c1c21',fg:d.ch===k?'#0e0e10':'#f5f5f2',tf:d.ch===k?`rotate(${i%2?2:-2}deg)`:'none',pick:()=>this.setDraft({ch:k})})),
+      diffs:['Mild','Spicy','Apocalyptic'].map(l=>({l,bg:d.diff===l?'#ff4fd8':'transparent',fg:d.diff===l?'#0e0e10':'#9a9aa3',pick:()=>this.setDraft({diff:l})})),
+      diffNote:{Mild:'Easy words, small sums. For people with feelings.',Spicy:'The default. Mildly humiliating.',Apocalyptic:'Faster beat, bigger sums, 50 shakes. No mercy.'}[d.diff],
+      canDelete:!!d.id,deleteAlarm:()=>this.go('home',{alarms:s.alarms.filter(a=>a.id!==d.id)}),saveAlarm:()=>this.saveAlarm(),
+      ringTime:fmt(C.h,C.m).time,roast:s.roastLine||ROASTS[s.roast][1],ringCta:CH[s.rolled][2],spinning:s.spinning,spun:!s.spinning,reelY:-s.reelPos*56,reelTrans:s.reelPos?'transform 2.3s cubic-bezier(.12,.75,.18,1)':'none',reelRing:s.spinning?'transparent':'#d4ff3a',
+      reel:(s.reel.length?s.reel:[s.rolled]).map((k,i,arr)=>({l:CH[k][0],c:i===arr.length-1&&!s.spinning?'#d4ff3a':'#f5f5f2'})),
+      poolText:Object.keys(CH).filter(k=>s.pool[k]).map(k=>CH[k][0]).join(', '),goSettings:()=>this.go('settings'),
+      poolChips:Object.keys(CH).map((k,i)=>({l:CH[k][0],bg:s.pool[k]?(i%2?'#ff4fd8':'#d4ff3a'):'#1c1c21',fg:s.pool[k]?'#0e0e10':'#9a9aa3',tf:s.pool[k]?`rotate(${i%2?1.5:-1.5}deg)`:'none',
+        toggle:()=>{const on=Object.values(s.pool).filter(Boolean).length;if(s.pool[k]&&on<=2)return this.setState({poolWarn:true});this.setState({pool:{...s.pool,[k]:!s.pool[k]},poolWarn:false});}})),
+      poolMsg:s.poolWarn?'Nice try. At least two stay on, or it isn\'t random.':'One gets rolled each morning. Turn off what you can\'t do (singing next to a sleeping partner, say).',poolMsgC:s.poolWarn?'#ff4fd8':'#9a9aa3',startChallenge:()=>this.startChallenge(),
+      sheet:s.sheet,openSkip:()=>this.setState({sheet:true}),closeSkip:()=>this.setState({sheet:false}),
+      burnSkip:()=>{if(s.skips<=0)return;this.go('skip',{lostStreak:s.streak,streak:0,skips:s.skips-1});},
+      lostStreak:s.lostStreak,lostBars:Array.from({length:12},(_,i)=>({d:(i*.06).toFixed(2)})),
+      beat:b,bpm:this.props.bpm||92,beatDur:(B/1000).toFixed(3),beatWords,
+      beatSegs:b.words.map((w,i)=>({bg:b.hits[i]?'#ff4fd8':i===b.idx?'#d4ff3a':'#2e2e35'})),
+      counting:b.idx<0&&!b.cleared,countText:String(-b.idx),
+      beatHead:b.cleared?(b.round<2?'Round cleared. Again.':'Done. Unbelievable.'):b.idx<0?'Get ready…':(b.last||'Sing it.'),
+      beatHint:s.mic?'Mic on: just sing each word on the beat.':s.micErr?'No mic access. Tap SING on every beat.':'Tap SING as you say each word, on the beat.',
+      tapBeat:()=>this.tapBeat(),toggleMic:()=>this.toggleMic(),micLabel:s.mic?'● Mic on':'Use mic',micBg:s.mic?'#ff4fd8':'#1c1c21',micFg:s.mic?'#0e0e10':'#9a9aa3',
+      eq:Array.from({length:18},(_,i)=>({bg:i%3?'#ff4fd8':'#d4ff3a',d:(0.35+(i*37%10)/22).toFixed(2),delay:(i*.06).toFixed(2)})),
+      fail:s.fail||{n:5,word:'Parrot',roast:'',next:'',fall:[]},
+      scan:{target:scan.target,scanning:scan.phase==='scanning',found:scan.phase==='found',foundLabel:'Found '+scan.target.replace(/^(a|the|your) /,'')+'.',
+        hint:scan.phase==='aim'?'Point at it and hold steady.':scan.phase==='scanning'?'Hold still. Judging…':'Fine. You win this one.',
+        cta:scan.phase==='aim'?'Scan':scan.phase==='scanning'?'Scanning…':'Done',action:()=>this.doScan()},
+      math:{step:Math.min(m.n+1,3),q:m.q+' =',input:m.input,dots:[0,1,2].map(i=>({bg:i<m.n?'#d4ff3a':'#2e2e35'})),
+        anim:m.wrong?'ag-shake .2s steps(2) 3':'none',ring:m.wrong?'#ff4fd8':'transparent',msgColor:m.wrong?'#ff4fd8':'#9a9aa3',
+        msg:m.wrong?pick(['Wrong. Your brain is still asleep.','Nope. Try counting on fingers.','Incorrect. Coffee can\'t save you.']):m.ok?'Correct. Don\'t celebrate yet.':'Get three right to stop the noise.'},
+      keys:[...['1','2','3','4','5','6','7','8','9'].map(n=>mk(n,n)),mk('⌫','del','#2e2e35','#9a9aa3'),mk('0','0'),mk('✓','ok','#d4ff3a','#0e0e10')],
+      shakeN:s.shakeN,shakeTarget:tgt,shakePct:Math.min(100,Math.round(s.shakeN/tgt*100)),shakeAnim:s.jolt?'ag-shake .15s steps(2) 1':'none',
+      shakeMsg:s.shakeN===0?'Grab the phone. Shake it hard.':s.shakeN<tgt/2?'Harder. I\'ve seen leaves shake more.':s.shakeN<tgt?'Almost. Don\'t throw me.':'That\'s enough, you maniac.',
+      fakeShake:()=>this.addShake(),
+      result:s.result||{secs:48,roast:'Annoyingly efficient.'},
+      usedSkips:s.skipQuota-s.skips,
+      week:[['M',62],['T',48],['W',95],['T',180],['F',41],['S',70],['S',0]].map(([l,v],i)=>({l,s:v?v+'s':'—',h:v?Math.max(8,Math.round(v/180*100)):3,bg:v===180?'#ff4fd8':v?'#d4ff3a':'#2e2e35'})),
+      roastOpts:['Mild','Savage','Unhinged'].map(l=>({l,bg:s.roast===l?'#d4ff3a':'transparent',fg:s.roast===l?'#0e0e10':'#9a9aa3',pick:()=>this.setState({roast:l})})),
+      roastSample:ROASTS[s.roast][0],
+      toggles:[['escalate','Escalating volume','Gets louder every 30 seconds.'],['vibrate','Vibrate like crazy','Phone does a little dance.'],['flash','Screen flash','Strobe the room when ringing.']].map(([k,l,dd])=>({l,d:dd,toggle:()=>this.setState({[k]:!s[k]}),...toggleStyle(s[k])})),
+      skipQuota:s.skipQuota,skipUp:()=>this.setState({skipQuota:Math.min(9,s.skipQuota+1),skips:Math.min(9,s.skips+1)}),skipDown:()=>this.setState({skipQuota:Math.max(0,s.skipQuota-1),skips:Math.max(0,s.skips-1)}),
+      replayOnboard:()=>this.go('onboard',{ob:0})
+    };
+  }
+}
+</script>
+</body>
+</html>

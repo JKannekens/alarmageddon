@@ -1,0 +1,9 @@
+# Keep LF everywhere: iOS builds run on macOS, and shell/Xcode files break with CRLF.
+* text=auto eol=lf
+
+*.bat text eol=crlf
+*.ttf binary
+*.wav binary
+*.png binary
+*.jpg binary
+*.jar binary

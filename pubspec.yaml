@@ -1,0 +1,44 @@
+name: alarmageddon
+description: "Alarm clock that won't stop until you prove you're awake."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  alarm: ^5.15.0
+  camera: ^0.12.1
+  permission_handler: ^13.0.2
+  provider: ^6.1.5+1
+  record: ^7.1.1
+  sensors_plus: ^7.1.1
+  shared_preferences: ^2.5.5
+  wakelock_plus: ^1.8.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/sounds/
+
+  fonts:
+    - family: Caprasimo
+      fonts:
+        - asset: assets/fonts/Caprasimo-Regular.ttf
+    - family: Figtree
+      fonts:
+        - asset: assets/fonts/Figtree-Regular.ttf
+        - asset: assets/fonts/Figtree-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Figtree-Bold.ttf
+          weight: 700
