@@ -1,5 +1,6 @@
 import 'package:alarmageddon/models.dart';
 import 'package:alarmageddon/ring/ring_flow.dart';
+import 'package:alarmageddon/ring/scan_challenge.dart';
 import 'package:alarmageddon/ring_session.dart';
 import 'package:alarmageddon/scheduler.dart';
 import 'package:alarmageddon/screens/edit_alarm.dart';
@@ -9,6 +10,7 @@ import 'package:alarmageddon/store.dart';
 import 'package:alarmageddon/theme.dart';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -166,6 +168,59 @@ void main() {
     await tester.pump();
     expect(find.text("Correct. Don't celebrate yet."), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
+    s.dispose();
+  });
+
+  testWidgets('scan with the camera denied falls back to math', (tester) async {
+    final s = session(Challenge.scan)
+      ..spinning = false
+      ..phase = RingPhase.challenge;
+    const camera = MethodChannel('plugins.flutter.io/camera');
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      camera,
+      (_) async => throw PlatformException(code: 'CameraAccessDenied'),
+    );
+    addTearDown(() => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(camera, null));
+    await pump(tester, RingFlow(session: s));
+    expect(find.text('no camera access'), findsOneWidget);
+    await tester.tap(find.text('Do the math'));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(s.rolled, Challenge.math);
+    expect(find.textContaining(' × '), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+    s.dispose();
+  });
+
+  testWidgets('scan on a platform without labelling falls back to math', (tester) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.linux;
+    final s = session(Challenge.scan)
+      ..spinning = false
+      ..phase = RingPhase.challenge;
+    await pump(tester, RingFlow(session: s));
+    expect(find.text('no scanner here'), findsOneWidget);
+    expect(find.text('Do the math'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+    s.dispose();
+    debugDefaultTargetPlatformOverride = null;
+  });
+
+  testWidgets('fake scan passes after judging', (tester) async {
+    ScanChallenge.fake = true;
+    addTearDown(() => ScanChallenge.fake = false);
+    final s = session(Challenge.scan)
+      ..spinning = false
+      ..phase = RingPhase.challenge;
+    await pump(tester, RingFlow(session: s));
+    await tester.tap(find.text('Scan'));
+    await tester.pump();
+    expect(find.text('Hold still. Judging…'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 2300));
+    expect(find.textContaining('Found '), findsOneWidget);
+    await tester.tap(find.text('Done'));
+    await tester.pump();
+    expect(s.phase, RingPhase.success);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 3));
     s.dispose();
   });
 

@@ -14,6 +14,7 @@ Flutter (iOS and Android from one codebase).
 | Sing-on-beat detection (raw PCM loudness onsets) | `record` |
 | Shake counting | `sensors_plus` |
 | Scan viewfinder | `camera` |
+| Scan check (on-device labelling) | `google_mlkit_image_labeling` |
 | Persistence | `shared_preferences` |
 | Permissions | `permission_handler` |
 
@@ -39,6 +40,8 @@ flutter run -d chrome        # UI only: the web build can't schedule real alarms
 flutter run                  # attached Android device or emulator
 ```
 
+The scan check needs ML Kit, which only runs on Android and iOS. Without it (web, or the camera is denied) the scan challenge turns into math. To preview the scan UI anyway, add `--dart-define=FAKE_SCAN=true`: every scan then passes after a short "judging" delay.
+
 ## How ringing works
 
 - The plugin has no repeating alarms. The store arms each alarm's next occurrence and re-arms it after it rings.
@@ -51,11 +54,13 @@ flutter run                  # attached Android device or emulator
 
 iOS builds need macOS and Xcode. From Windows, use a cloud Mac (for example Codemagic) and an Apple Developer account to install on a device or ship via TestFlight.
 
+The minimum iOS version is 15.5, because ML Kit requires it. `ios/Podfile` holds the ML Kit build settings.
+
 iOS limitation: if you force-quit the app, iOS won't let it ring. The app shows a warning notification when that happens. Possible upgrades are AlarmKit on iOS 26+ (`flutter_alarmkit`), or a burst of backup notifications.
 
 ## Known gaps / next steps
 
-- **Scan doesn't verify the object yet.** It always succeeds after a short "judging" delay, as in the design. Next step: on-device labelling, for example ML Kit.
+- **Scan labels aren't tuned on real phones yet.** Each object maps to a few ML Kit labels (`scanTargets` in `content.dart`), and a scan passes when one shows up at 0.6 confidence or higher in 3 frames in a row over 0.8 s. Debug builds log what the model sees (`scan: Cup 0.91, …`), so you can check the labels and thresholds on a device. After 3 misses the user can switch to math, so a label the model doesn't know can't trap anyone.
 - **Mic thresholds are fixed.** They may need tuning, or per-device calibration, on real phones.
 - **Possible extras:** a back-to-bed check, a barcode challenge, and a snitch mode that texts a friend when you burn a skip.
 

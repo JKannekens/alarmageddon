@@ -38,7 +38,7 @@ class RingSession extends ChangeNotifier {
   final bool flash;
   final DateTime startedAt;
 
-  late final Challenge rolled;
+  late Challenge rolled;
   late final List<Challenge> reel;
   Timer? _spinTimer;
 
@@ -88,6 +88,14 @@ class RingSession extends ChangeNotifier {
   void nag() {
     if (phase != RingPhase.challenge) return;
     nagging = true;
+    _notify();
+  }
+
+  /// Swaps in another challenge mid-ring, e.g. math when the phone can't
+  /// scan. The win or skip is then logged under the new one.
+  void switchTo(Challenge c) {
+    if (phase != RingPhase.challenge || c == rolled) return;
+    rolled = c;
     _notify();
   }
 
