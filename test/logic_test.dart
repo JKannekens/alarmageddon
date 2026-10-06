@@ -1,7 +1,9 @@
 import 'package:alarmageddon/content.dart';
 import 'package:alarmageddon/models.dart';
+import 'package:alarmageddon/ring/scan_judge.dart';
 import 'package:alarmageddon/screens/stats.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 
 AlarmSpec alarm(int h, int m, String days) =>
     AlarmSpec(id: 1, hour: h, minute: m, days: days.split('').map((c) => c == '1').toList());
@@ -70,6 +72,45 @@ void main() {
       final m = RegExp(r'(\d+) × (\d+) \+ (\d+)').firstMatch(q.text)!;
       expect(int.parse(m[1]!) * int.parse(m[2]!) + int.parse(m[3]!), q.answer);
     }
+  });
+
+  group('ScanJudge', () {
+    const cup = ScanTarget('a cup', {'cup', 'mug'});
+    final t0 = DateTime(2026, 10, 6, 6, 30);
+    DateTime at(int ms) => t0.add(Duration(milliseconds: ms));
+    List<ImageLabel> seen(String label, [double confidence = .9]) =>
+        [ImageLabel(label: label, confidence: confidence, index: 0)];
+
+    test('needs three frames in a row that span the hold', () {
+      final j = ScanJudge(cup);
+      expect(j.add(seen('Cup'), at(0)), isFalse);
+      expect(j.add(seen('Cup'), at(300)), isFalse);
+      expect(j.add(seen('Mug'), at(600)), isFalse); // three frames, but too quick
+      expect(j.add(seen('Cup'), at(900)), isTrue);
+    });
+
+    test('a miss starts over', () {
+      final j = ScanJudge(cup);
+      j.add(seen('Cup'), at(0));
+      j.add(seen('Cup'), at(400));
+      expect(j.add(seen('Pillow'), at(800)), isFalse);
+      expect(j.add(seen('Cup'), at(1200)), isFalse);
+      expect(j.add(seen('Cup'), at(1600)), isFalse);
+      expect(j.add(seen('Cup'), at(2000)), isTrue);
+    });
+
+    test('ignores low confidence, finds the target among other labels', () {
+      final j = ScanJudge(cup);
+      expect(j.sees(seen('Cup', .4)), isFalse);
+      expect(j.sees([...seen('Pillow'), ...seen('Mug', .7)]), isTrue);
+    });
+
+    test('scan target labels are lowercase', () {
+      for (final t in scanTargets) {
+        expect(t.labels, isNotEmpty, reason: t.name);
+        expect(t.labels.every((l) => l == l.toLowerCase()), isTrue, reason: t.name);
+      }
+    });
   });
 
   test('json round trips', () {

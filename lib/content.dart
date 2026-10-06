@@ -33,14 +33,26 @@ List<String> generateBeatWords(Difficulty diff) {
   }
 }
 
-const scanObjects = [
-  'a cup',
-  'the sink',
-  'your toothbrush',
-  'a shoe',
-  'the fridge',
-  'a spoon',
-  'a towel',
+class ScanTarget {
+  const ScanTarget(this.name, this.labels);
+
+  /// As the challenge says it: "a cup".
+  final String name;
+
+  /// Lowercased ML Kit base-model labels that count as finding it. Keep out
+  /// anything you can see from bed ("Textile", "Room").
+  /// Label map: https://developers.google.com/ml-kit/vision/image-labeling/label-map
+  final Set<String> labels;
+}
+
+const scanTargets = [
+  ScanTarget('a cup', {'cup', 'mug', 'coffee cup', 'drinkware'}),
+  ScanTarget('the sink', {'sink', 'tap', 'bathroom', 'plumbing fixture'}),
+  ScanTarget('your toothbrush', {'toothbrush'}),
+  ScanTarget('a shoe', {'shoe', 'sneakers', 'footwear', 'boot'}),
+  ScanTarget('the fridge', {'refrigerator', 'home appliance', 'kitchen'}),
+  ScanTarget('a spoon', {'spoon', 'cutlery', 'tableware', 'kitchen utensil'}),
+  ScanTarget('a towel', {'towel'}),
 ];
 
 class MathQuestion {

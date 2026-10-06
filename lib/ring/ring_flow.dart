@@ -21,13 +21,13 @@ class RingFlow extends StatelessWidget {
         value: session,
         child: Scaffold(
           backgroundColor: AG.bg,
-          body: Selector<RingSession, (RingPhase, bool)>(
-            selector: (_, s) => (s.phase, s.nagging),
+          body: Selector<RingSession, (RingPhase, bool, Challenge)>(
+            selector: (_, s) => (s.phase, s.nagging, s.rolled),
             builder: (_, state, _) {
-              final (phase, nagging) = state;
+              final (phase, nagging, rolled) = state;
               final Widget body = switch (phase) {
                 RingPhase.ringing => const RingScreen(),
-                RingPhase.challenge => switch (session.rolled) {
+                RingPhase.challenge => switch (rolled) {
                     Challenge.beat => const BeatChallenge(),
                     Challenge.scan => const ScanChallenge(),
                     Challenge.math => const MathChallenge(),
